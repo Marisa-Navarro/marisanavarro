@@ -105,7 +105,8 @@ Me motiva seguir aprendiendo y avanzando en este mundo de la enseñanza, donde c
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <span className="text-xs md:text-sm font-medium text-center h-10 overflow-hidden flex items-center justify-center">Formaciones y Seminarios</span>
+                    <span className="text-xs md:hidden md:text-sm font-medium text-center h-10 overflow-hidden flex items-center justify-center">Formaciones <br /> y <br /> Seminarios</span>
+                    <span className="text-xs  md:text-sm font-medium text-center h-10 overflow-hidden  items-center justify-center hidden md:flex">Formaciones  y  Seminarios</span>
                   </TabsTrigger>
                 )}
 

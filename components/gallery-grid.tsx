@@ -50,7 +50,7 @@ export function GalleryGrid({ category }: GalleryGridProps) {
 
     fetchGalleryItems()
   }, [category])
-
+ console.log(galleryItems)
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -92,7 +92,7 @@ export function GalleryGrid({ category }: GalleryGridProps) {
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                 <div className="p-4 text-white">
-                  <p className="text-sm capitalize">{item.title}</p>
+                  <p className="text-sm capitalize text-wrap">{item.title}</p>
                 </div>
               </div>
             </div>
