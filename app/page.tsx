@@ -146,12 +146,12 @@ Me motiva seguir aprendiendo y avanzando en este mundo de la enseñanza, donde c
 
       {/* Portfolio Section */}
       <section id="portfolio" className="py-24 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+        <div className="w-full md:max-w-6xl mx-auto">
           <h2 className="font-serif text-4xl md:text-5xl text-center mb-16" data-aos="fade-up">
             <span className="italic">Portfolio</span>
           </h2>
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-            <div className="overflow-x-auto pb-4 mb-8">
+            <div className="overflow-x-auto pb-4 mb-2 md:mb-8">
               <TabsList className="grid grid-cols-4 min-w-[350px] md:min-w-[800px] mx-auto mb-[170px] bg-transparent gap-8 md:gap-32 md:min-w-0 md:max-w-md items-start" data-aos="fade-up" data-aos-delay="200">
                 {categoryCounts["Formaciones y Seminarios"] > 0 && (
                   <TabsTrigger value="Formaciones y Seminarios" className="flex flex-col items-center data-[state=active]:bg-transparent">

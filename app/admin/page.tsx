@@ -590,10 +590,10 @@ export default function AdminPage() {
                             </div>
                           </div>
                           <div className="p-3 bg-white">
-                            <p className="text-sm font-medium capitalize">
+                            <p className="text-sm font-medium ">
                               {item.category}
                             </p>
-                            <p className="text-xs text-gray-500 capitalize">
+                            <p className="text-xs text-gray-500">
                               {item.type}
                             </p>
                           </div>

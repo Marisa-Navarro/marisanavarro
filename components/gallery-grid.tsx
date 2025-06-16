@@ -43,7 +43,7 @@ export function GalleryGrid({ category }: GalleryGridProps) {
   console.log(galleryItems);
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
         {loading ? (
           <div className="text-center py-12">
             <p className="text-gray-500">Cargando elementos...</p>
@@ -76,7 +76,7 @@ export function GalleryGrid({ category }: GalleryGridProps) {
 
             return (
               <div key={item.id} className="rounded-lg overflow-hidden relative" onClick={() => setSelectedItem(item)}>
-                <div className="aspect-[3/4] relative">
+                <div className="aspect-video  md:aspect-[3/4] relative">
                   {item.type === "youtube" ? (
                     <iframe
                       src={`https://www.youtube.com/embed/${videoId}${
@@ -105,10 +105,10 @@ export function GalleryGrid({ category }: GalleryGridProps) {
                 </div>
                 {item.title && (
                   <div className="p-4 bg-white">
-                    <p className="text-sm font-medium capitalize">
+                    <p className="text-sm font-medium ">
                       {item.title}
                     </p>
-                    <p className="text-xs text-gray-500 capitalize">
+                    <p className="text-xs text-gray-500">
                       {item.category}
                     </p>
                   </div>
