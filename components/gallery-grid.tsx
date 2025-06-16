@@ -56,8 +56,12 @@ export function GalleryGrid({ category }: GalleryGridProps) {
           galleryItems.map((item) => {
             let videoSrc = item.url;
             const extractVideoId = (url: string): string | null => {
-              const regex =
-                /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+              let regex;
+              if(url.includes("live")) {
+                regex = /youtube\.com\/live\/([a-zA-Z0-9_-]+)/
+              } else {
+                regex = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+              }
               const match = url.match(regex);
               return match ? match[1] : null;
             };

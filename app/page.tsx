@@ -152,9 +152,9 @@ Me motiva seguir aprendiendo y avanzando en este mundo de la enseñanza, donde c
           </h2>
           <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
             <div className="overflow-x-auto pb-4 mb-2 md:mb-8">
-              <TabsList className="grid grid-cols-4 min-w-[350px] md:min-w-[800px] mx-auto mb-[170px] bg-transparent gap-8 md:gap-32 md:min-w-0 md:max-w-md items-start" data-aos="fade-up" data-aos-delay="200">
+              <TabsList className="grid grid-cols-4 min-w-[350px] md:min-w-[800px] mx-auto mb-[170px] bg-transparent gap-8 md:gap-32  md:max-w-md items-start" data-aos="fade-up" data-aos-delay="200">
                 {categoryCounts["Formaciones y Seminarios"] > 0 && (
-                  <TabsTrigger value="Formaciones y Seminarios" className="flex flex-col items-center data-[state=active]:bg-transparent">
+                  <TabsTrigger value="Formaciones y Seminarios" className="flex flex-col items-center data-[state=active]:bg-transparent ">
                     <div className="w-12 h-12 md:w-32 md:h-32 rounded-full overflow-hidden mb-2 border-2 border-transparent transition-all duration-300 hover:scale-110 data-[state=active]:border-teal-600">
                       <Image
                         src="https://res.cloudinary.com/deq6qm96r/image/upload/v1749404018/1_1_ycnu44.jpg"
@@ -164,6 +164,7 @@ Me motiva seguir aprendiendo y avanzando en este mundo de la enseñanza, donde c
                         className="w-full h-full object-cover"
                       />
                     </div>
+                    
                     <span className="text-xs md:hidden md:text-sm font-medium text-center h-10 overflow-hidden flex items-center justify-center">Formaciones <br /> y <br /> Seminarios</span>
                     <span className="text-xs  md:text-sm font-medium text-center h-10 overflow-hidden  items-center justify-center hidden md:flex">Formaciones  y  Seminarios</span>
                   </TabsTrigger>
