@@ -9,8 +9,13 @@ const YouTubeVideo = ({
   title: string;
 }) => {
   const extractVideoId = (url: string): string | null => {
-    const regex =
-      /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+    let regex;
+    if (url.includes("live")) {
+      regex = /youtube\.com\/live\/([a-zA-Z0-9_-]+)/;
+    } else {
+      regex =
+        /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+    }
     const match = url.match(regex);
     return match ? match[1] : null;
   };
@@ -43,17 +48,19 @@ const YouTubeVideo = ({
     //     <p className="text-sm text-gray-500 mt-1">Click to play</p>
     //   </div>
     // </div>
-     <div className="p-6 pt-4">
-          <div className="aspect-video w-full">
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}${false ? "?autoplay=1" : ""}`}
-              title={title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full rounded-lg"
-            />
-          </div>
-        </div>
+    <div className="p-6 pt-4">
+      <div className="aspect-video w-full">
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}${
+            false ? "?autoplay=1" : ""
+          }`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="w-full h-full rounded-lg"
+        />
+      </div>
+    </div>
   );
 };
 
