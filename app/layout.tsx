@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     generator: 'v0.dev'
 }
 
+import { Toaster } from "@/components/ui/toaster"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,6 +34,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <Navbar />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

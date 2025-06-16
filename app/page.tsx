@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import AOS from "aos"
 import "aos/dist/aos.css"
 import Link from "next/link"
@@ -10,23 +10,82 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { GalleryGrid } from "@/components/gallery-grid"
 import { SocialLinks } from "@/components/social-links"
 import { portfolioItems } from "@/lib/mock-data"
-
+import { supabase } from "@/components/config"
+import { onGetPortfolio } from "@/actions/portfolio"
+import { Portfolio } from "@prisma/client"
 export default function Home() {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      easing: 'ease-out'
-    })
-  }, [])
+    const [galleryItems, setGalleryItems] = useState<Portfolio[]>([])
+    const [categoryCounts, setCategoryCounts] = useState({
+      "Formaciones y Seminarios": 0,
+      "Directos": 0,
+      "Material educativo": 0,
+      "Eventos": 0,
+    });
+    const [defaultCategory, setDefaultCategory] = useState<string>("");
+    const [firstNonEmpty, setFirstNonEmpty] = useState<string>("");
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const categories = [
+      "Formaciones y Seminarios",
+      "Directos",
+      "Material educativo",
+      "Eventos"
+    ];
 
-  const categoryCounts = {
-    "Formaciones y Seminarios": portfolioItems.filter(item => item.category === "Formaciones y Seminarios").length,
-    "Directos": portfolioItems.filter(item => item.category === "Directos").length,
-    "Material educativo": portfolioItems.filter(item => item.category === "Material educativo").length,
-    "Eventos": portfolioItems.filter(item => item.category === "Eventos").length,
-  };
+    useEffect(() => {
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-out'
+      })
+    }, [])
 
+    useEffect(() => {
+      async function fetchGalleryItems() {
+        try {
+
+          const response = await onGetPortfolio()
+          if (response.status !== 200) {
+            console.error("Error fetching portfolio items:", response.message);
+            return;
+          }
+          const data = response.data as Portfolio[]
+
+          console.log("Fetched portfolio items:", data)
+
+
+          // Calculate category counts
+          const counts = {
+            "Formaciones y Seminarios": 0,
+            "Directos": 0,
+            "Material educativo": 0,
+            "Eventos": 0,
+          };
+          (data || []).forEach((item: Portfolio) => {
+            if (counts[item.category as keyof typeof counts] !== undefined) {
+              counts[item.category as keyof typeof counts]++;
+            }
+          });
+          setCategoryCounts(counts);
+
+          // Set default category as first non-empty
+          const firstNonEmpty = categories.find(cat => counts[cat as keyof typeof counts] > 0) || categories[0];
+          setFirstNonEmpty(firstNonEmpty);
+        } catch (error) {
+          console.error('Error fetching gallery items:', error)
+        } finally {
+        }
+      }
+
+      fetchGalleryItems()
+    }, [])
+    
+  
+
+    useEffect(() => {
+     setDefaultCategory(firstNonEmpty);
+     setSelectedCategory(firstNonEmpty);
+    }, [firstNonEmpty]);
+    console.log("defaultCategory", defaultCategory);
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -91,7 +150,7 @@ Me motiva seguir aprendiendo y avanzando en este mundo de la enseñanza, donde c
           <h2 className="font-serif text-4xl md:text-5xl text-center mb-16" data-aos="fade-up">
             <span className="italic">Portfolio</span>
           </h2>
-          <Tabs defaultValue="Formaciones y Seminarios" className="w-full">
+          <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
             <div className="overflow-x-auto pb-4 mb-8">
               <TabsList className="grid grid-cols-4 min-w-[350px] md:min-w-[800px] mx-auto mb-[170px] bg-transparent gap-8 md:gap-32 md:min-w-0 md:max-w-md items-start" data-aos="fade-up" data-aos-delay="200">
                 {categoryCounts["Formaciones y Seminarios"] > 0 && (

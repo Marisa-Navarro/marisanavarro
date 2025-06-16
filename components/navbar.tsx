@@ -50,7 +50,7 @@ export function Navbar() {
             alt="Marisa Navarro Logo"
             width={50}
             height={50} // Adjusted for better aspect ratio
-            className="w-[50px] h-auto transition-all duration-300"
+            className="w-[50px] lg:w-[100px] h-auto transition-all duration-300"
             priority
           />
         </Link>
@@ -67,16 +67,16 @@ export function Navbar() {
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
               <nav className="flex flex-col gap-4 mt-8">
-                <Link href="/" className="text-lg font-medium py-2" onClick={handleLinkClick}>
+                <Link href="/" className="text-lg lg:text-xl font-medium py-2" onClick={handleLinkClick}>
                   Inicio
                 </Link>
-                <Link href="#about" className="text-lg font-medium py-2" onClick={handleLinkClick}>
+                <Link href="#about" className="text-lg lg:text-xl font-medium py-2" onClick={handleLinkClick}>
                   Sobre mí
                 </Link>
-                <Link href="#portfolio" className="text-lg font-medium py-2" onClick={handleLinkClick}>
+                <Link href="#portfolio" className="text-lg lg:text-xl font-medium py-2" onClick={handleLinkClick}>
                   Portfolio
                 </Link>
-                <Link href="#contact" className="text-lg font-medium py-2" onClick={handleLinkClick}>
+                <Link href="#contact" className="text-lg lg:text-xl font-medium py-2" onClick={handleLinkClick}>
                   Contacto
                 </Link>
               </nav>
@@ -86,7 +86,7 @@ export function Navbar() {
           <nav className="flex items-center gap-8">
             <Link
               href="/"
-              className={`font-medium hover:underline underline-offset-4 ${
+              className={`font-medium text-lg lg:text-xl hover:underline underline-offset-4 ${
                 isScrolled ? "text-teal-950" : "text-white"
               }`}
             >
@@ -94,7 +94,7 @@ export function Navbar() {
             </Link>
             <Link
               href="#about"
-              className={`font-medium hover:underline underline-offset-4 ${
+              className={`font-medium text-lg lg:text-xl hover:underline underline-offset-4 ${
                 isScrolled ? "text-teal-950" : "text-white"
               }`}
             >
@@ -102,7 +102,7 @@ export function Navbar() {
             </Link>
             <Link
               href="#portfolio"
-              className={`font-medium hover:underline underline-offset-4 ${
+              className={`font-medium text-lg lg:text-xl hover:underline underline-offset-4 ${
                 isScrolled ? "text-teal-950" : "text-white"
               }`}
             >
@@ -110,7 +110,7 @@ export function Navbar() {
             </Link>
             <Link
               href="#contact"
-              className={`font-medium hover:underline underline-offset-4 ${
+              className={`font-medium text-lg lg:text-xl hover:underline underline-offset-4 ${
                 isScrolled ? "text-teal-950" : "text-white"
               }`}
             >
