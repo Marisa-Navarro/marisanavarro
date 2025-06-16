@@ -513,8 +513,13 @@ export default function AdminPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {portfolioItems.map((item) => {
                       const extractVideoId = (url: string): string | null => {
-                        const regex =
-                          /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+                        let regex;
+                        if (url.includes("live")) {
+                          regex = /youtube\.com\/live\/([a-zA-Z0-9_-]+)/;
+                        } else {
+                          regex =
+                            /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+                        }
                         const match = url.match(regex);
                         return match ? match[1] : null;
                       };
@@ -593,9 +598,7 @@ export default function AdminPage() {
                             <p className="text-sm font-medium ">
                               {item.category}
                             </p>
-                            <p className="text-xs text-gray-500">
-                              {item.type}
-                            </p>
+                            <p className="text-xs text-gray-500">{item.type}</p>
                           </div>
                         </div>
                       );
