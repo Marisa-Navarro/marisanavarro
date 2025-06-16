@@ -44,6 +44,7 @@ import {
   PortfolioItem,
 } from "@/actions/portfolio";
 import { Portfolio, PortfolioType } from "@prisma/client";
+import Image from "next/image";
 
 // Update the PortfolioItem interface first
 
@@ -510,71 +511,95 @@ export default function AdminPage() {
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {portfolioItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="relative group rounded-lg overflow-hidden border border-gray-200"
-                      >
-                        <div className="aspect-[3/4] relative">
-                          {item.type === "video" || item.type === "youtube" ? (
-                            <video
-                              src={item.url}
-                              className="absolute inset-0 w-full h-full object-cover"
-                            />
-                          ) : (
-                            <img
-                              src={item.url}
-                              alt={`Portfolio item ${item.category}`}
-                              className="absolute inset-0 w-full h-full object-cover"
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button
-                                  variant="destructive"
-                                  size="icon"
-                                  className="h-8 w-8"
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    ¿Estás seguro?
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Esta acción no se puede deshacer. Se
-                                    eliminará permanentemente este elemento de
-                                    tu portafolio.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>
-                                    Cancelar
-                                  </AlertDialogCancel>
-                                  <AlertDialogAction
-                                    onClick={() => handleDelete(item.id)}
-                                    className="bg-red-600 hover:bg-red-700"
+                    {portfolioItems.map((item) => {
+                      const extractVideoId = (url: string): string | null => {
+                        const regex =
+                          /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
+                        const match = url.match(regex);
+                        return match ? match[1] : null;
+                      };
+
+                      const videoId = extractVideoId(item.url);
+
+                      return (
+                        <div
+                          key={item.id}
+                          className="relative group rounded-lg overflow-hidden border border-gray-200"
+                        >
+                          <div className="aspect-[3/4] relative">
+                            {item.type === "youtube" ? (
+                              <iframe
+                                src={`https://www.youtube.com/embed/${videoId}${
+                                  false ? "?autoplay=1" : ""
+                                }`}
+                                title={item.title}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                className="absolute inset-0 w-full h-full object-cover"
+                                allowFullScreen
+                              />
+                            ) : item.type === "video" ? (
+                              <video
+                                src={item.url}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                controls
+                                preload="metadata"
+                              />
+                            ) : (
+                              <Image
+                                src={item.url}
+                                alt={`${item.category} ${item.type}`}
+                                fill
+                                className="object-cover"
+                              />
+                            )}
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button
+                                    variant="destructive"
+                                    size="icon"
+                                    className="h-8 w-8"
                                   >
-                                    Eliminar
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                      ¿Estás seguro?
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      Esta acción no se puede deshacer. Se
+                                      eliminará permanentemente este elemento de
+                                      tu portafolio.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                      Cancelar
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction
+                                      onClick={() => handleDelete(item.id)}
+                                      className="bg-red-600 hover:bg-red-700"
+                                    >
+                                      Eliminar
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
+                          </div>
+                          <div className="p-3 bg-white">
+                            <p className="text-sm font-medium capitalize">
+                              {item.category}
+                            </p>
+                            <p className="text-xs text-gray-500 capitalize">
+                              {item.type}
+                            </p>
                           </div>
                         </div>
-                        <div className="p-3 bg-white">
-                          <p className="text-sm font-medium capitalize">
-                            {item.category}
-                          </p>
-                          <p className="text-xs text-gray-500 capitalize">
-                            {item.type}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </CardContent>
